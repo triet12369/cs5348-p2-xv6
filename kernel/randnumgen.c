@@ -6,7 +6,10 @@
 //values passed in. Arguments must be greater than zero.
 //If not, it will return -1;
 
-
+/*git config --global user.name "Your Name"
+    git config --global user.email you@example.com
+    git commit --amend --reset-author
+*/
 //implement lfsr
 
 //idea : the most random thing on here is the address assigned to
