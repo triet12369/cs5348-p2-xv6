@@ -32,6 +32,7 @@ pinit(void)
 static struct proc*
 allocproc(void)
 {
+  // cprintf("allocproc: called\n");
   struct proc *p;
   char *sp;
 
@@ -67,6 +68,10 @@ found:
   p->context = (struct context*)sp;
   memset(p->context, 0, sizeof *p->context);
   p->context->eip = (uint)forkret;
+
+  // The following code is added by Triet Cao - TXC200031
+  // Initialize the number of tickets for new process
+  p->num_tickets = N_PROC_TICKET;
 
   return p;
 }
@@ -144,6 +149,8 @@ fork(void)
   np->sz = proc->sz;
   np->parent = proc;
   *np->tf = *proc->tf;
+  // The following code is added by Triet Cao - TXC200031
+  np->num_tickets = proc->num_tickets; // copy number of tickets of parent process
 
   // Clear %eax so that fork returns 0 in the child.
   np->tf->eax = 0;

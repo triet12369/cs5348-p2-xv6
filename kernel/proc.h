@@ -9,6 +9,8 @@
 #define SEG_UDATA 5  // user data+stack
 #define SEG_TSS   6  // this process's task state
 #define NSEGS     7
+// The following code is added by Triet Cao - TXC200031
+#define N_PROC_TICKET 1
 
 // Per-CPU state
 struct cpu {
@@ -74,6 +76,8 @@ struct proc {
   struct file *ofile[NOFILE];  // Open files
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
+  // The following code is added by Triet Cao - TXC200031
+  uint num_tickets;            // Number of tickets assigned to this process
 };
 
 // Process memory is laid out contiguously, low addresses first:
