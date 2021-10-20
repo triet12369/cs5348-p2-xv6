@@ -28,7 +28,14 @@ before repitition.
 I will always take 
 */
 
-uint seed=1234;
+uint* randomnum_gen_seed;
+
+void
+random_seed(uint* seed_val){
+    randomnum_gen_seed=seed_val;
+    //cprintf("passed in value successfully: %d \n",*randomnum_gen_seed);
+}
+
 
 uint 
 random(uint min,uint max){
@@ -44,11 +51,11 @@ random(uint min,uint max){
     //diff is x
 
     uint x = max - min +1; /*To include max as well(since % is used)*/
-    uint result= seed;
+    uint result= *randomnum_gen_seed;
     result =result^(result<<13);
     result =result^(result>>17);
     result = result^(result<<5);
-    seed=result;
+    *randomnum_gen_seed=result;
     return_val= min + (result%x);
     return return_val;
 }

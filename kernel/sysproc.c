@@ -100,6 +100,7 @@ sys_settickets(void)
   cprintf("settickets: proc tickets before %d\n", proc->num_tickets);
   if (numtickets < 1) ret = -1;
   else {
+    //should we add here ? 
     proc->num_tickets += numtickets;
   }
   cprintf("settickets: proc tickets after %d\n", proc->num_tickets);
