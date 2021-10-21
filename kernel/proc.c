@@ -209,6 +209,9 @@ exit(void)
 
   // Jump into the scheduler, never to return.
   proc->state = ZOMBIE;
+
+  // Clear number of ticks
+  p->ticks = 0;
   sched();
   panic("zombie exit");
 }
@@ -332,6 +335,7 @@ scheduler(void)
       switchuvm(p);
       p->state = RUNNING;
       p->ticks += 1;
+      // cprintf("name %s, pid %d tickets %d ticks %d\n", p->name, p->pid, p->num_tickets, p->ticks);
       swtch(&cpu->scheduler, proc->context);
       switchkvm();
 
