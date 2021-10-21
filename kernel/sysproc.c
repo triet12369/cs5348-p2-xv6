@@ -1,10 +1,12 @@
-#include "types.h"
+#include "types.h" //
 #include "x86.h"
 #include "defs.h"
-#include "param.h"
+#include "param.h" //
 #include "mmu.h"
 #include "proc.h"
 #include "sysfunc.h"
+
+//#include "pstat.h"
 
 int
 sys_fork(void)
@@ -105,4 +107,11 @@ sys_settickets(void)
   }
   // cprintf("settickets: proc tickets after %d\n", proc->num_tickets);
   return ret;
+}
+
+int 
+sys_getpinfo(void){
+  struct pstat* obj;
+  if(argptr(0,(void*)&obj,sizeof(obj))<0) return -1;
+  return getpinfo(obj);
 }

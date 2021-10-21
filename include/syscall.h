@@ -23,7 +23,7 @@
 #define SYS_sbrk   19
 #define SYS_sleep  20
 #define SYS_uptime 21
-// The following code is added by Triet Cao - TXC200031
-#define SYS_settickets 22 // set number of tickets to a process
+#define SYS_settickets 22 // The following code is added by Triet Cao - TXC200031 :set number of tickets to a process
+#define SYS_getpinfo 23
 
 #endif // _SYSCALL_H_
