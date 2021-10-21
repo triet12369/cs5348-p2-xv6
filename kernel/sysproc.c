@@ -89,22 +89,20 @@ sys_uptime(void)
   return xticks;
 }
 // The following code is added by Triet Cao - TXC200031
-// set number of tickets that a process receive
+// set number of tickets to a process
+// If the number of tickets is less than 1 then we throw error
 int
 sys_settickets(void)
 {
   int numtickets;
   int ret = 0;
   argint(0, &numtickets);
-  cprintf("settickets: Process name %s\n", proc->name);
-  cprintf("settickets: proc tickets before %d\n", proc->num_tickets);
+  // cprintf("settickets: Process name %s\n", proc->name);
+  // cprintf("settickets: proc tickets before %d\n", proc->num_tickets);
   if (numtickets < 1) ret = -1;
   else {
-    //should we add here ? 
-    proc->num_tickets += numtickets;
+    proc->num_tickets = numtickets;
   }
-  cprintf("settickets: proc tickets after %d\n", proc->num_tickets);
-
-  // exit();
+  // cprintf("settickets: proc tickets after %d\n", proc->num_tickets);
   return ret;
 }
