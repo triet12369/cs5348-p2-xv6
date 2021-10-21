@@ -5,6 +5,7 @@
 #include "x86.h"
 #include "proc.h"
 #include "spinlock.h"
+#include "pstat.h"
 
 //different methid to define a struct pretty cool. but have to create
 //object right underneath it as done below.
@@ -271,40 +272,27 @@ select that process to run.
 if it doesnt something went wrong with the tickets.
 */
 /*struct {struct spinlock lock; struct proc proc[NPROC];} ptable;*/
-/*
-void
-scheduler(void)
-{
-  struct proc *p;
 
-  for(;;){
-    // Enable interrupts on this processor.
-    sti();
-
-    // Loop over process table looking for process to run.
+int getpinfo(struct pstat *val){
+  if(val){
+    struct proc *p;
+    int i = 0;
     acquire(&ptable.lock);
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
-      if(p->state != RUNNABLE)
-        continue;
-
-      // Switch to chosen process.  It is the process's job
-      // to release ptable.lock and then reacquire it
-      // before jumping back to us.
-      proc = p;
-      switchuvm(p);
-      p->state = RUNNING;
-      swtch(&cpu->scheduler, proc->context);
-      switchkvm();
-
-      // Process is done running for now.
-      // It should have changed its p->state before coming back.
-      proc = 0;
+      // if(p->state != RUNNABLE) continue;
+      val->inuse[i] = p->state != UNUSED ? 1 : 0;
+      val->tickets[i]=p->num_tickets;
+      val->pid[i]=p->pid;
+      val->ticks[i]=p->ticks;
+      i++;
     }
     release(&ptable.lock);
-
+    return 0;
   }
-}*/
-
+  else{
+    return -1;
+  }
+}
 
 void
 scheduler(void)
