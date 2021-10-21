@@ -74,6 +74,7 @@ found:
   // The following code is added by Triet Cao - TXC200031
   // Initialize the number of tickets for new process
   p->num_tickets = N_PROC_TICKET;
+  p->ticks = 0;
 
   return p;
 }
@@ -342,6 +343,7 @@ scheduler(void)
       proc = p;
       switchuvm(p);
       p->state = RUNNING;
+      p->ticks += 1;
       swtch(&cpu->scheduler, proc->context);
       switchkvm();
 
