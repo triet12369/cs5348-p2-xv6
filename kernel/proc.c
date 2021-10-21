@@ -347,7 +347,7 @@ scheduler(void)
       switchuvm(p);
       p->state = RUNNING;
       p->ticks += 1;
-      cprintf("name %s, pid %d tickets %d ticks %d\n", p->name, p->pid, p->num_tickets, p->ticks);
+      // cprintf("name %s, pid %d tickets %d ticks %d\n", p->name, p->pid, p->num_tickets, p->ticks);
       swtch(&cpu->scheduler, proc->context);
       switchkvm();
 
