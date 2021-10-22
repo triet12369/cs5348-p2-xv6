@@ -1,3 +1,5 @@
+/* The following code is added by Don, netid DMW200000*/
+//Triet modified. 
 #ifndef _PSTAT_H_
 #define _PSTAT_H
 #include "param.h"
@@ -10,3 +12,5 @@ struct pstat {
 };
 
 #endif
+
+/* End of code added/modified */

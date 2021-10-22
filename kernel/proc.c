@@ -296,6 +296,10 @@ int getpinfo(struct pstat *val){
     return -1;
   }
 }
+/* The following code is added by Don, netid DMW200000*/
+// Added lottery scheduler. Added a seed value for random num generator.
+// This is important because we want to keep updating this seed value after
+// every shift xor operation. (lfsr)
 
 void
 scheduler(void)
@@ -348,6 +352,7 @@ scheduler(void)
 
   }
 }
+/* End of code added/modified */
 
 // Enter scheduler.  Must hold only ptable.lock
 // and have changed proc->state.

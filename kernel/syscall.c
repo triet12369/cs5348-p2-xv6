@@ -104,6 +104,7 @@ static int (*syscalls[])(void) = {
 [SYS_write]   sys_write,
 [SYS_uptime]  sys_uptime,
 [SYS_settickets] sys_settickets,
+/* The following code is added by Don, netid DMW200000*/
 [SYS_getpinfo]  sys_getpinfo
 };
 

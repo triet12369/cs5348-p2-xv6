@@ -1,3 +1,4 @@
+/* The following code is added by Don, netid DMW200000*/
 #include "param.h"
 #include "types.h"
 #include "defs.h"
@@ -59,3 +60,5 @@ random(uint min,uint max){
     return_val= min + (result%x);
     return return_val;
 }
+
+/* End of code added/modified */
