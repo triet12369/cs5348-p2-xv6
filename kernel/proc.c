@@ -276,7 +276,9 @@ if it doesnt something went wrong with the tickets.
 */
 /*struct {struct spinlock lock; struct proc proc[NPROC];} ptable;*/
 
-int getpinfo(struct pstat *val){
+int
+getpinfo(struct pstat *val)
+{
   if(val){
     struct proc *p;
     int i = 0;
@@ -284,9 +286,9 @@ int getpinfo(struct pstat *val){
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       // if(p->state != RUNNABLE) continue;
       val->inuse[i] = p->state != UNUSED ? 1 : 0;
-      val->tickets[i]=p->num_tickets;
-      val->pid[i]=p->pid;
-      val->ticks[i]=p->ticks;
+      val->tickets[i] = p->num_tickets;
+      val->pid[i] = p->pid;
+      val->ticks[i] = p->ticks;
       i++;
     }
     release(&ptable.lock);
@@ -300,7 +302,7 @@ int getpinfo(struct pstat *val){
 void
 scheduler(void)
 {
-  uint randomnum_gen_seed=1234;
+  uint randomnum_gen_seed = 1234;
   struct proc *p;
   unsigned int totaltickets;
   uint winning_ticket;
@@ -309,22 +311,22 @@ scheduler(void)
   for(;;){
     // Enable interrupts on this processor.
     sti();
-    totaltickets=0;
-    start_val =0;
+    totaltickets = 0;
+    start_val = 0;
 
     acquire(&ptable.lock);
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       if(p->state != RUNNABLE) continue;
-      totaltickets+=p->num_tickets;
+      totaltickets += p->num_tickets;
     }
-    winning_ticket=random(0,totaltickets);
+    winning_ticket = random(0, totaltickets);
     //all my processes are in the array
     // Loop over process table looking for process to run.
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       if(p->state != RUNNABLE)
         continue;
 
-      if(winning_ticket > (p->num_tickets +start_val)){
+      if(winning_ticket > (p->num_tickets + start_val)){
         start_val += p->num_tickets;
         continue;
       } 
@@ -334,7 +336,7 @@ scheduler(void)
       proc = p;
       switchuvm(p);
       p->state = RUNNING;
-      p->ticks += 1;
+      p->ticks++;
       // cprintf("name %s, pid %d tickets %d ticks %d\n", p->name, p->pid, p->num_tickets, p->ticks);
       swtch(&cpu->scheduler, proc->context);
       switchkvm();

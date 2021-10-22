@@ -112,6 +112,6 @@ sys_settickets(void)
 int 
 sys_getpinfo(void){
   struct pstat* obj;
-  if(argptr(0,(void*)&obj,sizeof(obj))<0) return -1;
+  if(argptr(0, (void*)&obj, sizeof(obj)) < 0) return -1;
   return getpinfo(obj);
 }
