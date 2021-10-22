@@ -1,7 +1,7 @@
 #include "types.h"
 #include "stat.h"
 #include "user.h"
-// #include "pstat.h"
+#include "pstat.h"
 
 #define check(exp, msg) if(exp) {} else {\
    printf(1, "%s:%d check (" #exp ") failed: %s\n", __FILE__, __LINE__, msg);\
@@ -15,7 +15,7 @@ void spin()
   int k = 0;
 	for(i = 0; i < 50; ++i)
 	{
-		for(j = 0; j < 10000000; ++j)
+		for(j = 0; j < 100000000; ++j)
 		{
       k = j % 10;
       k = k + 1;
@@ -27,9 +27,10 @@ void spin()
 int
 main(int argc, char *argv[])
 {
-//    struct pstat st;
+   struct pstat st;
 //    int count = 0;
    int i = 0;
+   int k = 0;
    int pid[PROC];
    printf(1,"Spinning...\n");
    while(i < PROC)
@@ -37,22 +38,24 @@ main(int argc, char *argv[])
       pid[i] = fork();
 	    if(pid[i] == 0)
         {
-            settickets(10 + i*10); // 10 20 30 tickets
+            settickets(10*(i+1)); // 10 20 30 tickets
             spin();
             exit();
         }
 	  i++;
    }
-   sleep(500);
+   sleep(2000);
+    getpinfo(&st);
 //    //spin();
-//    check(getpinfo(&st) == 0, "getpinfo");
-//    printf(1, "\n**** PInfo ****\n");
-//    for(i = 0; i < NPROC; i++) {
-//       if (st.inuse[i]) {
-// 	       count++;
-//          printf(1, "pid: %d tickets: %d ticks: %d\n", st.pid[i], st.tickets[i], st.ticks[i]);
-//       }
-//    }
+   printf(1, "\n**** PInfo ****\n");
+   for(i = 0; i < NPROC; i++) {
+       for (k = 0; k < PROC; k++) {
+                    // printf(1, "pid: %d tickets: %d ticks: %d\n", st.pid[i], st.tickets[i], st.ticks[i]);
+            if (st.pid[i] == pid[k]) {
+                printf(1, "pid: %d tickets: %d ticks: %d\n", st.pid[i], st.tickets[i], st.ticks[i]);
+            }
+       }
+   }
    for(i = 0; i < PROC; i++)
    {
 	    kill(pid[i]);

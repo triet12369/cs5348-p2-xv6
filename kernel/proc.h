@@ -77,8 +77,8 @@ struct proc {
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
   // The following code is added by Triet Cao - TXC200031
-  uint num_tickets;            // Number of tickets assigned to this process
-  uint ticks;      
+  int num_tickets;            // Number of tickets assigned to this process
+  int ticks;      
 };
 
 // Process memory is laid out contiguously, low addresses first:
