@@ -31,31 +31,33 @@ I will always take
 uint* randomnum_gen_seed;
 
 void
-random_seed(uint* seed_val){
-    randomnum_gen_seed=seed_val;
+random_seed(uint* seed_val)
+{
+    randomnum_gen_seed = seed_val;
     //cprintf("passed in value successfully: %d \n",*randomnum_gen_seed);
 }
 
 
 uint 
-random(uint min,uint max){
+random(uint min, uint max)
+{
     
-    uint return_val,tmp;
+    uint return_val, tmp;
 
-    if(max<min){
-        tmp=min;
-        min=max;
-        max=tmp;
+    if(max < min){
+        tmp = min;
+        min = max;
+        max = tmp;
     }
 
     //diff is x
 
-    uint x = max - min +1; /*To include max as well(since % is used)*/
+    uint x = max - min + 1; /*To include max as well(since % is used)*/
     uint result= *randomnum_gen_seed;
-    result =result^(result<<13);
-    result =result^(result>>17);
-    result = result^(result<<5);
-    *randomnum_gen_seed=result;
-    return_val= min + (result%x);
+    result = result ^ (result << 13);
+    result = result ^ (result >> 17);
+    result = result ^ (result << 5);
+    *randomnum_gen_seed = result;
+    return_val = min + (result % x);
     return return_val;
 }
