@@ -27,8 +27,9 @@ char* sbrk(int);
 int sleep(int);
 int uptime(void);
 int settickets(int);
+/* The following code is added by Don, netid DMW200000*/
 int getpinfo(struct pstat*);
-
+/* End of code added/modified */
 // user library functions (ulib.c)
 int stat(char*, struct stat*);
 char* strcpy(char*, char*);

@@ -109,9 +109,17 @@ sys_settickets(void)
   return ret;
 }
 
+/* The following code is added by Don, netid DMW200000*/
+//pass in argument(pointer) from user space through argptr and then 
+//call getpinfo to modify its values. Its interesting cause I was confused
+//for awhile why we were asked to observe sys_read(here we want the users
+//arguments). but here we want to pass values to the user. which is only
+//possible cause we used pointers. 
 int 
 sys_getpinfo(void){
   struct pstat* obj;
   if(argptr(0, (void*)&obj, sizeof(obj)) < 0) return -1;
   return getpinfo(obj);
 }
+
+/* End of code added/modified */
